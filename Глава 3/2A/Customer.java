@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class Customer {
     private int id;
     private String familiya;
@@ -58,42 +60,41 @@ class Customer {
                 '}';
     }
 }
+
 class Customers {
-    private Customer[] customers;
-    private int count = 0;
+    private ArrayList<Customer> customers;
 
     public Customers() {
-        customers = new Customer[3];
+        customers = new ArrayList<>();
     }
-    public void addCustomers(Customer customer){
-        customers[count++] = customer;
-    }
-    public void sortName() {
-        Customer[] temp = new Customer[count];
-        for (int i = 0; i < count; i++) {
-            temp[i] = customers[i];
-        }
 
-        for (int i = 0; i < count - 1; i++) {
-            for (int j = 0; j < count - i - 1; j++) {
-                if (temp[j].getFamiliya().compareTo(temp[j + 1].getFamiliya()) > 0) {
-                    Customer buf = temp[j];
-                    temp[j] = temp[j + 1];
-                    temp[j + 1] = buf;
+    public void addCustomers(Customer customer) {
+        customers.add(customer);
+    }
+
+    public void sortName() {
+        ArrayList<Customer> temp = new ArrayList<>(customers);
+
+        for (int i = 0; i < temp.size() - 1; i++) {
+            for (int j = 0; j < temp.size() - i - 1; j++) {
+                if (temp.get(j).getFamiliya().compareTo(temp.get(j + 1).getFamiliya()) > 0) {
+                    Customer buf = temp.get(j);
+                    temp.set(j, temp.get(j + 1));
+                    temp.set(j + 1, buf);
                 }
             }
         }
 
-        for (int i = 0; i < count; i++) {
-            System.out.println(temp[i]);
+        for (int i = 0; i < temp.size(); i++) {
+            System.out.println(temp.get(i));
         }
     }
 
     public void CardRange(String minCard, String maxCard) {
-        for (int i = 0; i < count; i++) {
-            String card = customers[i].getCardNum();
+        for (int i = 0; i < customers.size(); i++) {
+            String card = customers.get(i).getCardNum();
             if (card.compareTo(minCard) >= 0 && card.compareTo(maxCard) <= 0) {
-                System.out.println(customers[i]);
+                System.out.println(customers.get(i));
             }
         }
     }
